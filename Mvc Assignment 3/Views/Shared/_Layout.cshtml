@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/css/main.css" rel="stylesheet" />
+    <script src="~/js/script.js"></script>
+</head>
+<body onload="StartTimer()">
+    <header>
+        <nav>
+            <!-- Focus on making a nav later. -->
+            <a href=""><img src="~/Funny_llama.jpg" alt="Logo" id="logo" /></a>
+            <ul class="main-ul">
+                <li class="main-li">@Html.ActionLink("Home", "Index", "Home")</li>
+                <li class="main-li"><a asp-controller="Home" asp-action="About">About</a></li>
+                <li class="main-li"><a asp-controller="Home" asp-action="Contact">Contact</a></li>
+                <li class="main-li"><a asp-controller="Home" asp-action="Projects">Projects</a></li>
+                <!-- Don't need asp-controller and asp-action on the lower line, but wanted quick access to it -->
+                <li class="main-li"><a asp-controller="FeverCheck" asp-action="FeverCheck">FeverCheck</a></li>
+                <li class="main-li"><a asp-controller="GuessingGame" asp-action="GuessingGame">GuessingGame</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="clearfix">
+        <div class="main-div">
+            @RenderBody()
+        </div>
+    </div>
+    <footer>
+        <div id="foot"></div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,47 @@
+﻿@model List<UserGuess>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>GuessingGame</h1>
+
+<form method="post">
+    <input type="number" name="number" min="1" max="100" value="" placeholder="Guess" />
+    <input type="submit" value="Guess" />
+</form>
+
+<br />
+<br />
+<br />
+
+<table id="GuessingGameTable">
+    <thead>
+        <tr id="testing">
+            <td></td>
+            <td>Guess</td>
+            <td>Description</td>
+            <td>Your guess(es)</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.IdNumber</td>
+                <td>@item.Id</td>
+                <td>@item.Details</td>
+                <td>@item.Guess</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (ViewBag.Blank != null)
+{
+    <p>@ViewBag.Blank</p>
+}
+@if (ViewBag.Random != null)
+{
+    <p>@ViewBag.Random</p>
+}
+
