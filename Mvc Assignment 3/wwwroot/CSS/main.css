@@ -39,7 +39,8 @@ header li {
 }
 
 footer {
-    margin-top: 300px;
+    margin-top: auto;
+    position: sticky;
 }
 
 .clearfix::after {

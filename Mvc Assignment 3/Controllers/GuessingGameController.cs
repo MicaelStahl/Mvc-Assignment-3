@@ -10,9 +10,6 @@ namespace Mvc_Assignment_3.Controllers
 {
     public class GuessingGameController : Controller
     {
-        public List<UserGuess> Guesses = new List<UserGuess>();
-        //public int RndNumber { get; set; }
-
         public const string SessionKeyUserNumber = "_UserNumber";
         public const string SessionKeyRndNumber = "_RndNumber";
         public const string SessionKeyUserDetails = "_UserDetails";
@@ -28,11 +25,8 @@ namespace Mvc_Assignment_3.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            bool Done = guessCheck.TrueReset();
-            if (Done == true)
-            {
-                _userGuess.RemoveAllValues();
-            }
+            ViewBag.NewGuess = "Insert a number to keep on guessing!";
+
             HttpContext.Session.Clear();
 
             int RndNumber = guessCheck.RandomNumber();
@@ -41,34 +35,38 @@ namespace Mvc_Assignment_3.Controllers
             {
                 HttpContext.Session.SetInt32("_RndNumber", RndNumber);
             }
-
             return View(_userGuess.AllGuesses());
         }
         [HttpPost]
         public IActionResult Index(int number)
         {
-            if (number != 0)
+            foreach (var item in _userGuess.AllGuesses())
             {
+                if (item.Details.Contains("Congratulations"))
+                {
+                    _userGuess.RemoveAllValues();
+                    break;
+                }
+            }
 
+            if (number != 0 && "_RndNumber" != null)
+            {
                 int randomNumber = (int)HttpContext.Session.GetInt32("_RndNumber");
-
                 string details = guessCheck.Compare(number, randomNumber);
 
                 _userGuess.NewGuess(details, number);
 
                 HttpContext.Session.SetInt32("_UserNumber", number);
                 HttpContext.Session.SetString("_UserDetails", details);
-                ViewBag.Random = randomNumber;
+
+                if (number == randomNumber)
+                {
+                    return RedirectToAction("Index", "GuessingGame");
+                }
             }
             else
             {
                 ViewBag.Blank = "Please enter a value before pressing the button.";
-            }
-            bool Done = guessCheck.Reset();
-
-            if (Done == true)
-            {
-                return RedirectToAction("Index", "GuessingGame");
             }
             return View(_userGuess.AllGuesses());
         }

@@ -18,12 +18,18 @@ namespace Mvc_Assignment_3
         {
             services.AddSingleton<IUserGuess, GuessCheck>();
 
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
             {
                 // Set a short timeout for easy testing.
-                options.IdleTimeout = TimeSpan.FromSeconds(60);
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
                 options.Cookie.HttpOnly = true;
                 // Make the session cookie essential
                 options.Cookie.IsEssential = true;
@@ -41,9 +47,8 @@ namespace Mvc_Assignment_3
                 app.UseDeveloperExceptionPage();
             }
             app.UseStaticFiles();
-
-            // This creates custom routing. The 2nd "routes.MapRoute is the standard in this case, while the first is a custom
             app.UseSession();
+            // This creates custom routing. The 2nd "routes.MapRoute is the standard in this case, while the first is a custom
             app.UseMvc(routes =>
             {
                 routes.MapRoute("FeverCheck", "FeverCheck",

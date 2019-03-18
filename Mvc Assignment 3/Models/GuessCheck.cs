@@ -8,16 +8,11 @@ namespace Mvc_Assignment_3.Models
 {
     public class GuessCheck : IUserGuess
     {
-        public bool Done { get; set; }
-
         public List<UserGuess> Guesses = new List<UserGuess>();
         private string idNumber = "Guess nr: ";
         private int idCount = 1;
 
-        //public GuessCheck()
-        //{
-        //    Guesses.Add(new UserGuess() { Id = 0, Details = "Your guess was too low! Your guess was: ", Guess = 0 });
-        //}
+        private string answer = "";
 
         public List<UserGuess> AllGuesses()
         {
@@ -34,12 +29,9 @@ namespace Mvc_Assignment_3.Models
 
         public string Compare(int? userGuess, int RndNumber)
         {
-            string answer = "";
-
             if (userGuess == RndNumber)
             {
                 answer = "Congratulations! You guessed correctly! The number was: ";
-                Done = true;
             }
             else if (userGuess > RndNumber)
             {
@@ -56,24 +48,14 @@ namespace Mvc_Assignment_3.Models
         public int RandomNumber()
         {
             Random random = new Random();
-            int Number = random.Next(1, 101);
-            return Number;
-        }
-
-        public bool Reset()
-        {
-            return Done;
-        }
-
-        public bool TrueReset()
-        {
-            bool Done = true;
-            return Done;
+            //int Number = random.Next(1, 101);
+            return random.Next(1,101);
         }
 
         public List<UserGuess> RemoveAllValues()
         {
-           Guesses.Clear();
+            idCount = 1;
+            Guesses.Clear();
             return Guesses;
         }
     }
